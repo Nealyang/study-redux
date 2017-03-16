@@ -1,0 +1,17 @@
+todo应用state设计如下：
+
+            {
+              todos: [{
+                text: 'Eat food',
+                completed: true
+              }, {
+                text: 'Exercise',
+                completed: false
+              }],
+              visibilityFilter: 'SHOW_COMPLETED'
+            }
+
+action如下：
+        { type: 'ADD_TODO', text: 'Go to swimming pool' }=>添加一个TODO
+        { type: 'TOGGLE_TODO', index: 1 }=>toggle一个TODO
+        { type: 'SET_VISIBILITY_FILTER', filter: 'SHOW_ALL' }=>设置显示
