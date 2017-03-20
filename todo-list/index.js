@@ -33,7 +33,7 @@ import { Provider } from 'react-redux'
 import App from './containers/App'
 import todoApp from './reducers/reducers'
 
-let store = createStore(todoApp);
+let store = createStore(todoApp,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 let rootElement = document.getElementById('root');
 render(
