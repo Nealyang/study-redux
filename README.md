@@ -245,7 +245,7 @@ connect方法接受两个参数：mapStateToProps和mapDispatchToProps。它们�
  
  当时对这个connect也是好一顿理解
  
- 通俗的说
+ 这么通俗的说你该明白了吧
  ===
  可以吧所有的组件想象成装在一个罐子里，这个罐子使用container做的，然后这个罐子的唯一的口就是里面的东西想要去改变的唯一途径。
  说白了，这个口，就是connect，而redux中的所有的组件都是在罐子外面的。
