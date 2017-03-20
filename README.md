@@ -264,6 +264,9 @@ connect方法接受两个参数：mapStateToProps和mapDispatchToProps。它们�
  关于redux的异步操作，以及在服务端的运行（node），universal渲染，结合react-router的使用等等等的功能，咱再慢慢了解慢慢研究慢慢总结哈~ 
   
   
+  喜欢的朋友给个star哈~
+  
+  
   ヾ(^▽^ヾ)
  
  
