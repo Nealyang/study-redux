@@ -33,7 +33,7 @@ state才是真正的前端数据库，它存储着这个应用所有需要的数
 ![img](./resources/counter1.png)
 注释错了，是count值为3  .╥﹏╥...
 
-这里展示的不是很明显，可以拿我们下一个demo来查看state
+这里展示的不是很明显，可以拿我们下一篇博客的demo来查看下它的 state
 
 ![async](./resources/async.png)
 
@@ -44,10 +44,12 @@ action
 ---
 既然这些state已经有了，那么我们是如何实现管理这些state中的数据的呢，当然，这里就要说到action了。
 什么是action？E:action,中：动作。
-是的，就是这么简单。。。只有当某一个动作发生的时候才能够触发这个state去改变，那么，触发state变化的原因那么多，比如这里的我们的点击事件，还有网络请求，页面进入，鼠标移入。。。所以action的出现，就是为了把这些操作所产生或者改变的数据从应用传到store中的有效载荷。
-需要说明的是，action是state的唯一来源。
-action也没有什么神秘，本质上就是一个JavaScript对象，但是约定的包含type属性（你总得告诉你这个action是啥嘛），可以理解成每个人都要有名字一般。除了type属性，别的属性，都可以DIY~
+是的，就是这么简单。。。<br>
+只有当某一个动作发生的时候才能够触发这个state去改变，那么，触发state变化的原因那么多，比如这里的我们的点击事件，还有网络请求，页面进入，鼠标移入。。。所以action的出现，就是为了把这些操作所产生或者改变的数据从应用传到store中的有效载荷。
+需要说明的是，action是state的唯一来源。<br>
+action也没有什么神秘，本质上就是一个JavaScript对象，但是约定的包含type属性（你总得告诉你这个action是啥嘛），可以理解成每个人都要有名字一般。除了type属性，别的属性，都可以DIY~<br>
 那么这么多action一个个手动创建必然不现实，一般我们会写好action creator，即action的创建函数。调用action creator，给你返回一个action。
+
 比如这个counter应用，我们就有两个action，一个decrement，一个increment。
 所以这里的action creator写成如下：
 
