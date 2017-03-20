@@ -30,6 +30,11 @@ state才是真正的前端数据库，它存储着这个应用所有需要的数
 ![img](./resources/counter1.png)
 注释错了，是count值为3  .╥﹏╥...
 
+这里展示的不是很明显，可以拿我们下一个demo来查看state
+
+![async](./resources/async.png)
+
+
 所以说道这里，大家对于state就已经明白了，需要说明一下的是，一个应用只应该有一个state。对，不管多大，就一个！
 
 ###action
