@@ -339,27 +339,7 @@ webpack-isomorphic-tools同时被使用在生产环境和开发环节中
 
 因为它，你就可以使用require()在你的项目中实现universal 渲染了
 
-配置实例
----
-
-#### url-loader / file-loader (images, fonts, etc)
- url-loader ,file-loader没有额外的东西需要配置
-```javascript
-{
-  assets:
-  {
-    images:
-    {
-      extensions: ['png', 'jpg']
-    },
-
-    fonts:
-    {
-      extensions: ['woff', 'ttf']
-    }
-  }
-}
-```
-   
+## API
+#### process.env.NODE_ENV
 
     
