@@ -339,7 +339,272 @@ webpack-isomorphic-tools同时被使用在生产环境和开发环节中
 
 因为它，你就可以使用require()在你的项目中实现universal 渲染了
 
-## API
-#### process.env.NODE_ENV
+## Configuration
+```javascript
+{
+  // debug mode.
+  //当设置为TRUE时，在console中可以看到调试信息
+  debug: true, // is false by default
+
+  // (可选的)
+  // (推荐使用)
+  //
+  //当端口被设置时，这个port就会被使用】、
+  //运行http server去为webpack assets服务，前提是你必须安装了express
+  //
+  //在开发环境下，webpack-assets.json文件并没有被写入到磁盘中，而是在内存中，并且被存储
+  //
+  //这个端口的设置当且仅当在开发环境下会有效果
+  //
+  // port: 8888, // is false by default
+
+  // verbosity.
+  //
+  // 当设置为 'no webpack stats',
+  // 在开发环境下，不会将Webpack统计信息输出到控制台
+  // 这也意味着不会将Webpack错误或警告输出到控制台。
+  //
+  // 当设置 'webpack stats for each build',
+  // 将Webpack统计信息输出到控制台
+  //
+  // 不设置任何值 (default), 在console答应webpack 的stats
+  // 在开发模式下仅仅构建一次
+  //
+  // verbosity: ..., // is `undefined` by default
+
+  //
+  // patch_require: true, // 默认FALSE
+
+  // By default it creates 'webpack-assets.json' file at 
+  // webpack_configuration.context (which is your project folder).
+  //默认情况下，在webpack_configuration.context指定的目录下创建webpack-assets.json文件
+  // 当然，你也可以修改
+  // (therefore changing both folder and filename).
+  //
+  // (relative to webpack_configuration.context which is your project folder)
+  //
+  webpack_assets_file_path: 'webpack-assets.json',
+
+  // By default, when running in debug mode, it creates 'webpack-stats.json' file at 
+  // webpack_configuration.context (which is your project folder).
+  // You can change the stats file path as you wish
+  // (therefore changing both folder and filename).
+  //
+  // (relative to webpack_configuration.context which is your project folder)
+  //
+  webpack_stats_file_path: 'webpack-stats.json',
+
+  // Makes `webpack-isomorphic-tools` aware of Webpack aliasing feature
+  // (if you use it)
+  // https://webpack.github.io/docs/resolving.html#aliasing
+  //
+  // The `alias` parameter corresponds to `resolve.alias` 
+  // in your Webpack configuration.
+  //
+  alias: webpack_configuration.resolve.alias, // is {} by default
+
+  // if you're using Webpack's `resolve.modulesDirectories`
+  // then you should also put them here.
+  //
+  // modulesDirectories: webpack_configuration.resolve.modulesDirectories // is ['node_modules'] by default
+
+  // here you can define all your asset types
+  //
+  assets:
+  {
+    // keys of this object will appear in:
+    //  * webpack-assets.json
+    //  * .assets() method call result
+    //  * .regular_expression(key) method call
+    //
+    png_images: 
+    {
+      // which file types belong to this asset type
+      //
+      extension: 'png', // or extensions: ['png', 'jpg', ...],
+
+      // [optional]
+      // 
+      // here you are able to add some file paths 
+      // for which the require() call will bypass webpack-isomorphic-tools
+      // (relative to the project base folder, e.g. ./sources/server/kitten.jpg.js)
+      // (also supports regular expressions, e.g. /^\.\/node_modules\/*/, 
+      //  and functions(path) { return true / false })
+      //
+      // exclude: [],
+
+      // [optional]
+      // 
+      // here you can specify manually the paths 
+      // for which the require() call will be processed by webpack-isomorphic-tools
+      // (relative to the project base folder, e.g. ./sources/server/kitten.jpg.js)
+      // (also supports regular expressions, e.g. /^\.\/node_modules\/*/, 
+      //  and functions(path) { return true / false }).
+      // in case of `include` only included paths will be processed by webpack-isomorphic-tools.
+      //
+      // include: [],
+
+      // [optional]
+      // 
+      // determines which webpack stats modules 
+      // belong to this asset type
+      //
+      // arguments:
+      //
+      //  module             - a webpack stats module
+      //
+      //                       (to understand what a "module" is
+      //                        read the "What's a "module"?" section of this readme)
+      //
+      //  regular_expression - a regular expression 
+      //                       composed of this asset type's extensions
+      //                       e.g. /\.scss$/, /\.(ico|gif)$/
+      //
+      //  options            - various options
+      //                       (development mode flag,
+      //                        debug mode flag,
+      //                        assets base url,
+      //                        project base folder,
+      //                        regular_expressions{} for each asset type (by name),
+      //                        webpack stats json object)
+      //
+      //  log
+      // 
+      // returns: a Boolean
+      //
+      // by default is: "return regular_expression.test(module.name)"
+      //
+      // premade utility filters:
+      //
+      // Webpack_isomorphic_tools_plugin.style_loader_filter
+      //  (for use with style-loader + css-loader)
+      //
+      filter: function(module, regular_expression, options, log)
+      {
+        return regular_expression.test(module.name)
+      },
+
+      // [optional]
+      //
+      // transforms a webpack stats module name 
+      // to an asset path (usually is the same thing)
+      //
+      // arguments:
+      //
+      //  module  - a webpack stats module
+      //
+      //            (to understand what a "module" is
+      //             read the "What's a "module"?" section of this readme)
+      //
+      //  options - various options
+      //            (development mode flag,
+      //             debug mode flag,
+      //             assets base url,
+      //             project base folder,
+      //             regular_expressions{} for each asset type (by name),
+      //             webpack stats json object)
+      //
+      //  log
+      // 
+      // returns: a String
+      //
+      // by default is: "return module.name"
+      //
+      // premade utility path extractors:
+      //
+      // Webpack_isomorphic_tools_plugin.style_loader_path_extractor
+      //  (for use with style-loader + css-loader)
+      //
+      path: function(module, options, log)
+      {
+        return module.name
+      },
+
+      // [optional]
+      // 
+      // parses a webpack stats module object
+      // for an asset of this asset type
+      // to whatever you need to get 
+      // when you require() these assets 
+      // in your code later on.
+      //
+      // this is what you'll see as the asset value in webpack-assets.json: 
+      // { ..., path(): compile(parser()), ... }
+      //
+      // can be a CommonJS module source code:
+      // module.exports = ...what you export here is 
+      //                     what you get when you require() this asset...
+      //
+      // if the returned value is not a CommonJS module source code
+      // (it may be a string, a JSON object, whatever) 
+      // then it will be transformed into a CommonJS module source code.
+      //
+      // in other words: 
+      //
+      // // making of webpack-assets.json
+      // for each type of configuration.assets
+      //   modules.filter(type.filter).for_each (module)
+      //     assets[type.path()] = compile(type.parser(module))
+      //
+      // // requiring assets in your code
+      // require(path) = (path) => return assets[path]
+      //
+      // arguments:
+      //
+      //  module  - a webpack stats module
+      //
+      //            (to understand what a "module" is
+      //             read the "What's a "module"?" section of this readme)
+      //
+      //  options - various options
+      //            (development mode flag,
+      //             debug mode flag,
+      //             assets base url,
+      //             project base folder,
+      //             regular_expressions{} for each asset type (by name),
+      //             webpack stats json object)
+      //
+      //  log
+      // 
+      // returns: whatever (could be a filename, could be a JSON object, etc)
+      //
+      // by default is: "return module.source"
+      //
+      // premade utility parsers:
+      //
+      // Webpack_isomorphic_tools_plugin.url_loader_parser
+      //  (for use with url-loader or file-loader)
+      //  require() will return file URL
+      //  (is equal to the default parser, i.e. no parser)
+      //
+      // Webpack_isomorphic_tools_plugin.css_loader_parser
+      //  (for use with css-loader when not using "modules" feature)
+      //  require() will return CSS style text
+      //
+      // Webpack_isomorphic_tools_plugin.css_modules_loader_parser
+      //  (for use with css-loader when using "modules" feature)
+      //  require() will return a JSON object map of style class names
+      //  which will also have a `_style` key containing CSS style text
+      //
+      parser: function(module, options, log)
+      {
+        log.info('# module name', module.name)
+        log.info('# module source', module.source)
+        log.info('# project path', options.project_path)
+        log.info('# assets base url', options.assets_base_url)
+        log.info('# regular expressions', options.regular_expressions)
+        log.info('# debug mode', options.debug)
+        log.info('# development mode', options.development)
+        log.debug('debugging')
+        log.warning('warning')
+        log.error('error')
+      }
+    },
+    ...
+  },
+  ...]
+}
+```
+
 
     
