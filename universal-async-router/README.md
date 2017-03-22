@@ -342,7 +342,7 @@ webpack-isomorphic-tools同时被使用在生产环境和开发环节中
 配置实例
 ---
 
-
+#### url-loader / file-loader (images, fonts, etc)
     
 
     
